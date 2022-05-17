@@ -9,12 +9,12 @@ import sys
 
 pygame.init()
  
-white = (255, 255, 255)
-yellow = (255, 255, 102)
-black = (0, 0, 0)
-red = (213, 50, 80)
-green = (0, 255, 0)
-blue = (50, 153, 213)
+#white = (255, 255, 255)
+#yellow = (255, 255, 102)
+#black = (0, 0, 0)
+#red = (213, 50, 80)
+#green = (0, 255, 0)
+#blue = (50, 153, 213)
 
 rules_color = (100, 13, 100)
 mode_color = (0, 13, 140)
@@ -100,8 +100,6 @@ def gameLoop():
  
     x1 = dis_width / 2
     y1 = dis_height / 2
-    
-   
     
     x1_change = 0
     y1_change = 0
