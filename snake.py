@@ -52,7 +52,7 @@ def Show_rules():
     dis.blit(value, [4, dis_height-90])
     
 def Your_level(level):
-    value = rules_font.render("Your level: "+str(level)+"/3. Type 1, 2 or 3 to change it.", True, (0, 13, 140))
+    value = rules_font.render("Your level: "+str(level)+"/3. Press 1, 2 or 3 to change it.", True, (0, 13, 140))
     dis.blit(value, [4, dis_height-60])  
     
 def Your_mode(killing):
