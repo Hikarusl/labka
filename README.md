@@ -9,6 +9,9 @@
 <p style="text-align: center;">
 	<img src = './images/sample.png' alt='Скриншот игры' width="500" style="max-width: 70%;">
 </p>  
+<p style="text-align: center;">
+	<img src = './images/sample2.png' alt='Скриншот игры2' width="500" style="max-width: 70%;">
+</p>  
 
 
 ## Используемые технологии
