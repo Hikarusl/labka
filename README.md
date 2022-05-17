@@ -7,7 +7,7 @@
 * Онлайн табло подсчета очков, а также табло с рекордом по нескольким играм;
 * Исчезающие правила, отображающиеся перед началом игры.
 <p style="text-align: center;">
-	<img src = './images/sample.png' alt='Скриншот игры' style="max-width: 70%;">
+	<img src = './images/sample.png' alt='Скриншот игры' width="500" style="max-width: 70%;">
 </p>  
 
 
