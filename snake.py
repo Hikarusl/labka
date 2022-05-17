@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon May 16 23:04:31 2022
-
 @author: ksy19
 """
 
@@ -35,6 +33,8 @@ score_font = pygame.font.SysFont("bahnschrift", 35)
 record_font = pygame.font.SysFont("bahnschrift", 35)
 rules_font = pygame.font.SysFont("bahnschrift", 15)
  
+
+# functions showing hints
 def Your_score(score):
     value = score_font.render("Score: " + str(score), True, (0, 13, 140))
     dis.blit(value, [4, 4])
@@ -63,7 +63,7 @@ def Your_mode(killing):
     value = rules_font.render(mes, True, (0, 13, 140))
     dis.blit(value, [4, dis_height-30])
     
-
+#function drawing snakes from gradient blocks
 def our_snake(snake_block, snake_list, snake_color=[0,0,0]):
     i1=snake_color[0]
     i2=snake_color[1]
@@ -78,12 +78,12 @@ def our_snake(snake_block, snake_list, snake_color=[0,0,0]):
         if i3>200: i3 = 200
     
  
- 
+# function showing message at the end of game 
 def message(msg, color, x_mess, y_mess):
     mesg = font_style.render(msg, True, color)
     dis.blit(mesg, [x_mess, y_mess])
  
-
+#main function for game
 def gameLoop():
     global bg_color
     global record 
@@ -216,9 +216,11 @@ def gameLoop():
     pygame.quit()
     sys.exit()
  
+#initial parameters for global vars    
 bg_color = (255, 200, 245)
 record = 0
 level = 1
 killing_walls = True
 snake_color=[0,0,0]
+
 gameLoop()
