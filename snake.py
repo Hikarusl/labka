@@ -16,6 +16,10 @@ red = (213, 50, 80)
 green = (0, 255, 0)
 blue = (50, 153, 213)
 
+rules_color = (100, 13, 100)
+mode_color = (0, 13, 140)
+food_color = (155, 40, 50)
+gameover_color = (130, 10, 130)
 
 dis_width = 600
 dis_height = 400
@@ -36,19 +40,19 @@ rules_font = pygame.font.SysFont("bahnschrift", 15)
 
 # functions showing hints
 def Your_score(score):
-    value = score_font.render("Score: " + str(score), True, (0, 13, 140))
+    value = score_font.render("Score: " + str(score), True, mode_color)
     dis.blit(value, [4, 4])
 
 def Your_record(record):
-    value = record_font.render("Record: " + str(record), True, (0, 13, 140))
+    value = record_font.render("Record: " + str(record), True, mode_color)
     dis.blit(value, [dis_width-200, 4])
  
 def Show_rules():
     rules = '''Eat red apples without touching walls or your own tail! Use arrows to start moving!'''
-    value = rules_font.render(rules, True, (100, 13, 100))
+    value = rules_font.render(rules, True, rules_color)
     dis.blit(value, [4, dis_height-120])
     sn_color = "Press S to change Snake's Head color."
-    value = rules_font.render(sn_color, True, (100, 13, 100))
+    value = rules_font.render(sn_color, True, rules_color)
     dis.blit(value, [4, dis_height-90])
     
 def Your_level(level):
@@ -60,7 +64,7 @@ def Your_mode(killing):
         mes = "Mode: Walls will kill you, to change mode press W."
     else:
         mes ="Mode: Now you can get throught the walls, to change mode press W."
-    value = rules_font.render(mes, True, (0, 13, 140))
+    value = rules_font.render(mes, True, mode_color)
     dis.blit(value, [4, dis_height-30])
     
 #function drawing snakes from gradient blocks
@@ -113,8 +117,8 @@ def gameLoop():
  
         while game_close == True:
             dis.fill(bg_color)
-            message("You Lost! Press C-Play, or Q-Quit", (130, 10, 130), dis_width/6+10, dis_height/3)
-            message("Press B-change background color", (130, 10, 130), dis_width/5-10, dis_height/3*2)
+            message("You Lost! Press C-Play, or Q-Quit", gameover_color, dis_width/6+10, dis_height/3)
+            message("Press B-change background color", gameover_color, dis_width/5-10, dis_height/3*2)
             Your_score(Length_of_snake - 1)
             if Length_of_snake - 1 > record:
                 record = Length_of_snake - 1 
@@ -182,7 +186,7 @@ def gameLoop():
                 
         
         dis.fill(bg_color)
-        pygame.draw.rect(dis, (155, 40, 50), [foodx, foody, snake_block, snake_block], border_radius=snake_block//2)
+        pygame.draw.rect(dis, food_color, [foodx, foody, snake_block, snake_block], border_radius=snake_block//2)
         snake_Head = []
         snake_Head.append(x1)
         snake_Head.append(y1)
