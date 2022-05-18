@@ -7,6 +7,8 @@ import pygame
 import random
 import sys
 
+from caption.caption import Caption
+
 pygame.init()
  
 #white = (255, 255, 255)
@@ -38,15 +40,6 @@ record_font = pygame.font.SysFont("bahnschrift", 35)
 rules_font = pygame.font.SysFont("bahnschrift", 15)
  
 
-# functions showing hints
-def Your_score(score):
-    value = score_font.render("Score: " + str(score), True, mode_color)
-    dis.blit(value, [4, 4])
-
-def Your_record(record):
-    value = record_font.render("Record: " + str(record), True, mode_color)
-    dis.blit(value, [dis_width-200, 4])
- 
 def Show_rules():
     rules = '''Eat red apples without touching walls or your own tail! Use arrows to start moving!'''
     value = rules_font.render(rules, True, rules_color)
@@ -55,9 +48,7 @@ def Show_rules():
     value = rules_font.render(sn_color, True, rules_color)
     dis.blit(value, [4, dis_height-90])
     
-def Your_level(level):
-    value = rules_font.render("Your level: "+str(level)+"/3. Press 1, 2 or 3 to change it.", True, (0, 13, 140))
-    dis.blit(value, [4, dis_height-60])  
+ 
     
 def Your_mode(killing):
     if killing:
@@ -120,10 +111,10 @@ def gameLoop():
             dis.fill(bg_color)
             message("You Lost! Press C-Play, or Q-Quit", gameover_color, dis_width/6+10, dis_height/3)
             message("Press B-change background color", gameover_color, dis_width/5-10, dis_height/3*2)
-            Your_score(Length_of_snake - 1)
+            Caption.Your_score(Length_of_snake - 1)
             if Length_of_snake - 1 > record:
                 record = Length_of_snake - 1 
-            Your_record(record)
+            Caption.Your_record(record)
             pygame.display.update()
  
             for event in pygame.event.get():
@@ -159,16 +150,16 @@ def gameLoop():
                 elif x1_change == 0 and y1_change == 0:
                     if event.key == pygame.K_1:
                         level = 1
-                        Your_level(level)
+                        Caption.Your_level(level)
                     elif event.key == pygame.K_2:
                         level = 2
-                        Your_level(level)
+                        Caption.Your_level(level)
                     elif event.key == pygame.K_3:
                         level = 3
-                        Your_level(level)
+                        Caption.Your_level(level)
                     elif event.key==pygame.K_w:
                         killing_walls = not killing_walls
-                        Your_mode(killing_walls)
+                        Caption.Your_mode(killing_walls)
                     elif event.key==pygame.K_s:
                         snake_color = [random.randint(0, 100), random.randint(0, 100), random.randint(0, 100)]
                         our_snake(snake_block, snake_List, snake_color)
@@ -187,7 +178,7 @@ def gameLoop():
             x1 = (x1 + dis_width) % dis_width
             y1 = (y1 + dis_height) % dis_height
 
-    dis.fill(bg_color)
+        dis.fill(bg_color)
         pygame.draw.rect(dis, food_color, [foodx, foody, snake_block, snake_block], border_radius=snake_block//2)
         snake_Head = []
         snake_Head.append(x1)
@@ -201,12 +192,12 @@ def gameLoop():
                 game_close = True
  
         our_snake(snake_block, snake_List, snake_color)
-        Your_score(Length_of_snake - 1)
-        Your_record(record)
+        Caption.Your_score(Length_of_snake - 1)
+        Caption.Your_record(record)
         
         if x1_change == 0 and y1_change == 0:
             Show_rules()
-            Your_level(level)
+            Caption.Your_level(level)
             Your_mode(killing_walls)
 
         pygame.display.update()
