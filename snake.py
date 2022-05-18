@@ -97,6 +97,9 @@ def gameLoop():
     snake_speed = 5*level
     game_over = False
     game_close = False
+
+    border = [[2, 5], [3, 5], [4, 5], [5, 5], [6, 5], [7, 5], [8, 5], [20, 1], [20, 2], [20, 3]]
+    #border = read_border()
  
     x1 = dis_width / 2
     y1 = dis_height / 2
@@ -174,16 +177,17 @@ def gameLoop():
     
         x1 += x1_change
         y1 += y1_change
-        
-        if x1 >= dis_width or x1 < 0 or y1 >= dis_height or y1 < 0:
-            if killing_walls:
-                game_close = True
-            else:
-                x1 = (x1+dis_width)%dis_width
-                y1 = (y1+dis_height)%dis_height
-                
-        
-        dis.fill(bg_color)
+
+        # bounds check
+        if crash_border(x1, y1, border):
+            game_close = True
+        elif (x1 >= dis_width or x1 < 0 or y1 >= dis_height or y1 < 0) and killing_walls:
+            game_close = True
+        else:
+            x1 = (x1 + dis_width) % dis_width
+            y1 = (y1 + dis_height) % dis_height
+
+    dis.fill(bg_color)
         pygame.draw.rect(dis, food_color, [foodx, foody, snake_block, snake_block], border_radius=snake_block//2)
         snake_Head = []
         snake_Head.append(x1)
