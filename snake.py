@@ -21,7 +21,7 @@ mode_color = (0, 13, 140)
 food_color = (155, 40, 50)
 gameover_color = (130, 10, 130)
 
-dis_width = 600
+dis_width = 600    
 dis_height = 400
  
 dis = pygame.display.set_mode((dis_width, dis_height))
