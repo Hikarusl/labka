@@ -1,8 +1,6 @@
-#!/usr/bin/env python
-# coding: utf-8
 
-# In[ ]:
 import pygame
+import random
 
 def crash_border(x1, y1, border):
     x_cell = int(x1//20)
@@ -18,6 +16,8 @@ def draw_border(border, dis):
         
 def read_border():
     b = []
+    #x = random.randint(1, 3)
+    #s = 'borders/'  + str(x) + '.txt'
     with open('borders/1.txt') as f:
         c = f.readline()
         for line in f:
@@ -26,3 +26,4 @@ def read_border():
                 a = [int(a[0]), int(a[1])]
                 b.append(a)
     return b
+
