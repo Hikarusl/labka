@@ -19,7 +19,7 @@
 	<img src = './images/sample3.png' alt='Скриншот игры2' width="500" style="max-width: 70%;">
 </p>  
 
-# ggggg
+
 ## Используемые технологии
 * Игра написана с использованием классической игровой библиотеки pygame.  
 Установка: `pip install pygame`
