@@ -6,7 +6,7 @@ import pygame
 import random
 import sys
 
-import pygame
+#import pygame
 
 #from caption.caption import Your_score, Your_record, Your_level
 from work_with_borders import crash_border, draw_border, read_border
