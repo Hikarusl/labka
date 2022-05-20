@@ -6,75 +6,13 @@ import pygame
 import random
 import sys
 
-#import pygame
 
-#from caption.caption import Your_score, Your_record, Your_level
 from work_with_borders import crash_border, draw_border, read_border
+from constants import food_color, gameover_color, snake_block
+from constants import dis_width, dis_height, gameover_text, background_text
+from messages import Your_score, Your_level, Your_mode, Your_record, Show_rules, message
 
 
-pygame.init()
- 
-#white = (255, 255, 255)
-#yellow = (255, 255, 102)
-#black = (0, 0, 0)
-#red = (213, 50, 80)
-#green = (0, 255, 0)
-#blue = (50, 153, 213)
-
-rules_color = (100, 13, 100)
-mode_color = (0, 13, 140)
-food_color = (155, 40, 50)
-gameover_color = (130, 10, 130)
-
-dis_width = 600    
-dis_height = 400
- 
-dis = pygame.display.set_mode((dis_width, dis_height))
-pygame.display.set_caption('Snake Game')
- 
-clock = pygame.time.Clock()
- 
-snake_block = 20
-snake_speed = 10
- 
-font_style = pygame.font.SysFont("bahnschrift", 25)
-score_font = pygame.font.SysFont("bahnschrift", 35)
-record_font = pygame.font.SysFont("bahnschrift", 35)
-rules_font = pygame.font.SysFont("bahnschrift", 15)
-
-
-def Your_score(score):
-    value = score_font.render("Score: " + str(score), True, mode_color)
-    dis.blit(value, [4, 4])
-
-
-def Your_record(record):
-    value = record_font.render("Record: " + str(record), True, mode_color)
-    dis.blit(value, [dis_width - 200, 4])
-
-
-def Your_level(level):
-    value = rules_font.render("Your level: " + str(level) + "/3. Press 1, 2 or 3 to change it.", True, (0, 13, 140))
-    dis.blit(value, [4, dis_height - 60])
-
-def Show_rules():
-    rules = '''Eat red apples without touching walls or your own tail! Use arrows to start moving!'''
-    value = rules_font.render(rules, True, rules_color)
-    dis.blit(value, [4, dis_height-120])
-    sn_color = "Press S to change Snake's Head color."
-    value = rules_font.render(sn_color, True, rules_color)
-    dis.blit(value, [4, dis_height-90])
-    
- 
-    
-def Your_mode(killing):
-    if killing:
-        mes = "Mode: Walls will kill you, to change mode press W."
-    else:
-        mes ="Mode: Now you can get throught the walls, to change mode press W."
-    value = rules_font.render(mes, True, mode_color)
-    dis.blit(value, [4, dis_height-30])
-    
 #function drawing snakes from gradient blocks
 def our_snake(snake_block, snake_list, snake_color=[0,0,0]):
     i1=snake_color[0]
@@ -88,12 +26,15 @@ def our_snake(snake_block, snake_list, snake_color=[0,0,0]):
         if i1>200: i1 = 200
         if i2>200: i2 = 200
         if i3>200: i3 = 200
-    
- 
-# function showing message at the end of game 
-def message(msg, color, x_mess, y_mess):
-    mesg = font_style.render(msg, True, color)
-    dis.blit(mesg, [x_mess, y_mess])
+
+#returns food coordinates checked on not crossing the walls
+def food_coordinates(dis_width, dis_height, snake_block, border):
+    foodx = round(random.randrange(0, dis_width - snake_block) // snake_block) * snake_block
+    foody = round(random.randrange(0, dis_height - snake_block) // snake_block) * snake_block
+    while [foodx//snake_block, foody//snake_block] in border:
+        foodx = round(random.randrange(0, dis_width - snake_block) // snake_block) * snake_block
+        foody = round(random.randrange(0, dis_height - snake_block) // snake_block) * snake_block
+    return foodx, foody
  
 #main function for game
 def gameLoop():
@@ -106,35 +47,26 @@ def gameLoop():
     game_over = False
     game_close = False
 
-    #border = [[2, 5], [3, 5], [4, 5], [5, 5], [6, 5], [7, 5], [8, 5], [20, 1], [20, 2], [20, 3]]
     border = read_border()
- 
+    
     x1 = dis_width / 2
     y1 = dis_height / 2
-    
     x1_change = 0
     y1_change = 0
-    
     snake_List = []
     Length_of_snake = 1
- 
-    foodx = round(random.randrange(0, dis_width - snake_block) // snake_block) * snake_block
-    foody = round(random.randrange(0, dis_height - snake_block) // snake_block) * snake_block
-    while [foodx, foody] in border:
-        foodx = round(random.randrange(0, dis_width - snake_block) // snake_block) * snake_block
-        foody = round(random.randrange(0, dis_height - snake_block) // snake_block) * snake_block
-
+    foodx, foody = food_coordinates(dis_width, dis_height, snake_block, border)
     
     while not game_over:
  
         while game_close == True:
             dis.fill(bg_color)
-            message("You Lost! Press C-Play, or Q-Quit", gameover_color, dis_width/6+10, dis_height/3)
-            message("Press B-change background color", gameover_color, dis_width/5-10, dis_height/3*2)
-            Your_score(Length_of_snake - 1)
+            message(gameover_text, gameover_color, dis_width/6+10, dis_height/3, dis)
+            message(background_text, gameover_color, dis_width/5-10, dis_height/3*2, dis)
+            Your_score(Length_of_snake - 1, dis)
             if Length_of_snake - 1 > record:
                 record = Length_of_snake - 1 
-            Your_record(record)
+            Your_record(record, dis)
             pygame.display.update()
  
             for event in pygame.event.get():
@@ -170,16 +102,16 @@ def gameLoop():
                 elif x1_change == 0 and y1_change == 0:
                     if event.key == pygame.K_1:
                         level = 1
-                        Your_level(level)
+                        Your_level(level, dis)
                     elif event.key == pygame.K_2:
                         level = 2
-                        Your_level(level)
+                        Your_level(level, dis)
                     elif event.key == pygame.K_3:
                         level = 3
-                        Your_level(level)
+                        Your_level(level, dis)
                     elif event.key==pygame.K_w:
                         killing_walls = not killing_walls
-                        Your_mode(killing_walls)
+                        Your_mode(killing_walls, dis)
                     elif event.key==pygame.K_s:
                         snake_color = [random.randint(0, 100), random.randint(0, 100), random.randint(0, 100)]
                         our_snake(snake_block, snake_List, snake_color)
@@ -190,7 +122,7 @@ def gameLoop():
         y1 += y1_change
 
         # bounds check
-        if crash_border(x1, y1, border):
+        if crash_border(x1, y1, border) and killing_walls:
             game_close = True
         elif (x1 >= dis_width or x1 < 0 or y1 >= dis_height or y1 < 0) and killing_walls:
             game_close = True
@@ -214,19 +146,18 @@ def gameLoop():
                 game_close = True
  
         our_snake(snake_block, snake_List, snake_color)
-        Your_score(Length_of_snake - 1)
-        Your_record(record)
+        Your_score(Length_of_snake - 1, dis)
+        Your_record(record, dis)
         
         if x1_change == 0 and y1_change == 0:
-            Show_rules()
-            Your_level(level)
-            Your_mode(killing_walls)
+            Show_rules(dis)
+            Your_level(level, dis)
+            Your_mode(killing_walls, dis)
 
         pygame.display.update()
  
         if x1 == foodx and y1 == foody:
-            foodx = round(random.randrange(0, dis_width - snake_block) / snake_block) * snake_block
-            foody = round(random.randrange(0, dis_height - snake_block) / snake_block) * snake_block
+            foodx, foody = food_coordinates(dis_width, dis_height, snake_block, border)
             Length_of_snake += 1
             snake_speed += 0.25
  
@@ -234,8 +165,14 @@ def gameLoop():
  
     pygame.quit()
     sys.exit()
- 
-#initial parameters for global vars    
+
+
+pygame.init()
+dis = pygame.display.set_mode((dis_width, dis_height))
+pygame.display.set_caption('Snake Game') 
+clock = pygame.time.Clock()
+
+#initial parameters for global vars  
 bg_color = (255, 200, 245)
 record = 0
 level = 1
