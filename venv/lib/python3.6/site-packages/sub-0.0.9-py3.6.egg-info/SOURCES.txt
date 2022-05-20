@@ -1,0 +1,14 @@
+CONTRIBUTING.md
+LICENSE-MIT.txt
+MANIFEST.in
+README.md
+setup.cfg
+setup.py
+bin/sub
+sub/__init__.py
+sub/main.py
+sub.egg-info/PKG-INFO
+sub.egg-info/SOURCES.txt
+sub.egg-info/dependency_links.txt
+sub.egg-info/requires.txt
+sub.egg-info/top_level.txt

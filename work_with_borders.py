@@ -2,7 +2,7 @@
 # coding: utf-8
 
 # In[ ]:
-
+import pygame
 
 def crash_border(x1, y1, border):
     x_cell = int(x1//20)
@@ -12,16 +12,17 @@ def crash_border(x1, y1, border):
     else:
         return False
     
-def draw_border(border):
+def draw_border(border, dis):
     for i in border:
         pygame.draw.rect(dis, (173, 135, 98), [(i[0]-1)*20, (i[1]-1)*20, 20, 20])
         
 def read_border():
     b = []
-    f = open('map.txt')
-    for line in f:
-        a = list(map(int, line.split()))
-        b.append(a)
-    f.close()
+    with open('borders/1.txt') as f:
+        c = f.readline()
+        for line in f:
+            if line != '\ufeff':
+                a = line.split()
+                a = [int(a[0]), int(a[1])]
+                b.append(a)
     return b
-
