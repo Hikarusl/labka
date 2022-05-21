@@ -56,6 +56,9 @@ def gameLoop():
     snake_List = []
     Length_of_snake = 1
     foodx, foody = food_coordinates(dis_width, dis_height, snake_block, border)
+    foodx1, foody1 = food_coordinates(dis_width, dis_height, snake_block, border)
+    while foodx==foodx1 and foody==foody1:
+        foodx1, foody1 = food_coordinates(dis_width, dis_height, snake_block, border)
     
     while not game_over:
  
@@ -87,16 +90,16 @@ def gameLoop():
             if event.type == pygame.QUIT:
                 game_over = True
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
+                if event.key == pygame.K_LEFT and ((x1_change!=snake_block) ):
                     x1_change = -snake_block
                     y1_change = 0
-                elif event.key == pygame.K_RIGHT:
+                elif event.key == pygame.K_RIGHT and ((x1_change!=-snake_block)):
                     x1_change = snake_block
                     y1_change = 0
-                elif event.key == pygame.K_UP:
+                elif event.key == pygame.K_UP and ( y1_change!=snake_block):
                     y1_change = -snake_block
                     x1_change = 0
-                elif event.key == pygame.K_DOWN:
+                elif event.key == pygame.K_DOWN and ( y1_change!=-snake_block):
                     y1_change = snake_block
                     x1_change = 0
                 elif x1_change == 0 and y1_change == 0:
@@ -132,6 +135,7 @@ def gameLoop():
 
         dis.fill(bg_color)
         pygame.draw.rect(dis, food_color, [foodx, foody, snake_block, snake_block], border_radius=snake_block//2)
+        pygame.draw.rect(dis, food_color, [foodx1, foody1, snake_block, snake_block], border_radius=snake_block//2)
         draw_border(border, dis)
 
         snake_Head = []
@@ -158,6 +162,14 @@ def gameLoop():
  
         if x1 == foodx and y1 == foody:
             foodx, foody = food_coordinates(dis_width, dis_height, snake_block, border)
+            while foodx==foodx1 and foody==foody1:
+                foodx, foody = food_coordinates(dis_width, dis_height, snake_block, border)
+            Length_of_snake += 1
+            snake_speed += 0.25
+        if x1 == foodx1 and y1 == foody1:
+            foodx1, foody1 = food_coordinates(dis_width, dis_height, snake_block, border)
+            while foodx==foodx1 and foody==foody1:
+                foodx1, foody1 = food_coordinates(dis_width, dis_height, snake_block, border)
             Length_of_snake += 1
             snake_speed += 0.25
  
